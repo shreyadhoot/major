@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.majorproject.indorinamkeens">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Splash.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SignUp.CustomerSignUpActivity" />
+        <activity
+            android:name=".Dashboard.DashboardActivity"
+            android:label=""
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Dashboard.AboutUs.AboutUsActivity"
+            android:label="About Us" />
+        <activity
+            android:name=".Dashboard.AccountDetails.AccountActivity"
+            android:label="Account Details" />
+        <activity
+            android:name=".Dashboard.ContactUs.ContactUsActivity"
+            android:label="Contact Us" />
+        <activity
+            android:name=".Dashboard.Feedback.FeedbackActivity"
+            android:label="Feedback" />
+        <activity
+            android:name=".Dashboard.Home.CustomerHome"
+            android:label="Home" />
+        <activity
+            android:name=".Dashboard.Products.ProductsActivity"
+            android:label="Products" />
+        <activity
+            android:name=".Dashboard.RateApp.RateUs"
+            android:label="Rate Us" />
+        <activity
+            android:name=".Dashboard.Share.ShareApp"
+            android:label="Share with Friends" />
+        <activity
+            android:name=".Dashboard.Shops.ShopsActivity"
+            android:label="Shops" />
+        <activity
+            android:name=".Dashboard.TrackOrder.TrackOrderActivity"
+            android:label="Track Order" />
+        <activity android:name=".PreLogin.PreLoginActivity" />
+        <activity
+            android:name=".Dashboard.Products.CartActivity"
+            android:label="@string/title_activity_cart"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Dashboard.AccountDetails.Address.SavedAddressActivity" />
+        <activity android:name=".SignUp.VendorSignUpActivity" />
+        <activity android:name=".SignUp.AdminSignUpActivity"></activity>
+    </application>
+
+</manifest>
