@@ -19,6 +19,11 @@
     </group>
 
     <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_bag"
+            android:title="My Cart" />
         <item
             android:id="@+id/nav_track"
             android:icon="@drawable/ic_track"
@@ -27,10 +32,6 @@
             android:id="@+id/nav_account"
             android:icon="@drawable/ic_accounts"
             android:title="Account Details" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_logout"
-            android:title="Logout" />
 
     </group>
 
@@ -42,12 +43,16 @@
                 android:icon="@drawable/ic_feedback"
                 android:title="Feedback" />
             <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share with friends" />
+            <item
                 android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_contact"
+                android:icon="@android:drawable/ic_menu_call"
                 android:title="Contact Us" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@android:drawable/ic_menu_info_details"
                 android:title="About Us" />
 
 

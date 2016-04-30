@@ -1,60 +1,49 @@
 package com.majorproject.indorinamkeens.Dashboard;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.majorproject.indorinamkeens.Dashboard.AboutUs.AboutUsActivity;
-import com.majorproject.indorinamkeens.Dashboard.AccountDetails.AccountActivity;
-import com.majorproject.indorinamkeens.Dashboard.ContactUs.ContactUsActivity;
-import com.majorproject.indorinamkeens.Dashboard.Feedback.FeedbackActivity;
-import com.majorproject.indorinamkeens.Dashboard.Home.CustomerHome;
-import com.majorproject.indorinamkeens.Dashboard.Products.ProductsActivity;
-import com.majorproject.indorinamkeens.Dashboard.RateApp.RateUs;
-import com.majorproject.indorinamkeens.Dashboard.Share.ShareApp;
-import com.majorproject.indorinamkeens.Dashboard.Shops.ShopsActivity;
-import com.majorproject.indorinamkeens.Dashboard.TrackOrder.TrackOrderActivity;
+import com.majorproject.indorinamkeens.Dashboard.AboutUs.AboutUsFragment;
+import com.majorproject.indorinamkeens.Dashboard.AccountDetails.AccountFragment;
+import com.majorproject.indorinamkeens.Dashboard.CartCheckout.CartFragment;
+import com.majorproject.indorinamkeens.Dashboard.ContactUs.ContactUsFragment;
+import com.majorproject.indorinamkeens.Dashboard.Feedback.FeedbackFragment;
+import com.majorproject.indorinamkeens.Dashboard.Home.CustomerHomeFragment;
+import com.majorproject.indorinamkeens.Dashboard.Products.ProductsFragment;
+import com.majorproject.indorinamkeens.Dashboard.ShareApp.ShareAppFragment;
+import com.majorproject.indorinamkeens.Dashboard.Shops.ShopsFragment;
+import com.majorproject.indorinamkeens.Dashboard.TrackOrder.TrackOrderFragment;
 import com.majorproject.indorinamkeens.R;
 
-public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-protected LinearLayout linear;
+public class DashboardActivity extends AppCompatActivity {
+    private DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        CustomerHomeFragment fragobj = new CustomerHomeFragment();
+        fragmentTransactionReplace(fragobj);
 
+        SharedPreferences sharedPref = getSharedPreferences("NamkeensPreferenceData", MODE_PRIVATE);
+        String username = sharedPref.getString("Name", null);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        linear = (LinearLayout) findViewById(R.id.linear);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
         }
+
     }
 
     @Override
@@ -66,78 +55,79 @@ protected LinearLayout linear;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    private void setupDrawerContent(final NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
 
-        if (id == R.id.nav_home) {
+                    case R.id.nav_home:
+                        fragmentTransactionReplace(CustomerHomeFragment.getInstance());
+                        break;
 
-            Intent in = new Intent(DashboardActivity.this, CustomerHome.class);
-            startActivity(in);
-            finish();
+                    case R.id.nav_products:
+                        fragmentTransactionReplace(ProductsFragment.getInstance());
+                        break;
 
-        }  else if (id == R.id.nav_products) {
+                    case R.id.nav_Shops:
+                        fragmentTransactionReplace(ShopsFragment.getInstance());
+                        break;
 
-            Intent in = new Intent(DashboardActivity.this, ProductsActivity.class);
-            startActivity(in);
+                    case R.id.nav_cart:
+                        fragmentTransactionReplace(CartFragment.getInstance());
+                        break;
 
+                    case R.id.nav_track:
+                        fragmentTransactionReplace(TrackOrderFragment.getInstance());
+                        break;
 
-        } else if (id == R.id.nav_Shops) {
+                    case R.id.nav_account:
+                        fragmentTransactionReplace(AccountFragment.getInstance());
+                        break;
 
-            Intent in = new Intent(DashboardActivity.this, ShopsActivity.class);
-            startActivity(in);
-            finish();
+                    case R.id.nav_feedback:
+                        fragmentTransactionReplace(FeedbackFragment.getInstance());
+                        break;
 
-        } else if (id == R.id.nav_track) {
+                    case R.id.nav_share:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey! I am using this great app to buy namkeens. Check it out. Url");
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
+                        break;
 
-            Intent in = new Intent(DashboardActivity.this, TrackOrderActivity.class);
-            startActivity(in);
-            finish();
+                    case R.id.nav_contact:
+                        fragmentTransactionReplace(ContactUsFragment.getInstance());
+                        break;
 
-        } else if (id == R.id.nav_account) {
-
-            Intent in = new Intent(DashboardActivity.this, AccountActivity.class);
-            startActivity(in);
-            finish();
-
-        }   else if (id == R.id.nav_feedback) {
-
-            Intent in = new Intent(DashboardActivity.this, FeedbackActivity.class);
-            startActivity(in);
-            finish();
-
-        } else if (id == R.id.nav_contact) {
-
-            Intent in = new Intent(DashboardActivity.this, ContactUsActivity.class);
-            startActivity(in);
-            finish();
-
-        } else if (id == R.id.nav_about) {
-
-            Intent in = new Intent(DashboardActivity.this, AboutUsActivity.class);
-            startActivity(in);
-            finish();
+                    case R.id.nav_about:
+                        fragmentTransactionReplace(AboutUsFragment.getInstance());
+                        break;
 
 
-        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+
+                }
+
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
+
+    private void fragmentTransactionReplace(Fragment fragmentInstance) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragmentInstance)
+                .commit();
     }
 }

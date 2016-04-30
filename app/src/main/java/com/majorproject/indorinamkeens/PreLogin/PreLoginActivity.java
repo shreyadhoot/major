@@ -68,7 +68,7 @@ public class PreLoginActivity extends AppCompatActivity {
         Customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.SlideOutLeft)
+                YoYo.with(Techniques.SlideOutUp)
                         .duration(1500)
                         .playOn(linear);
 
@@ -88,7 +88,7 @@ public class PreLoginActivity extends AppCompatActivity {
         Vendor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.SlideOutLeft)
+                YoYo.with(Techniques.SlideOutUp)
                         .duration(1500)
                         .playOn(linear);
 
@@ -108,7 +108,7 @@ public class PreLoginActivity extends AppCompatActivity {
         Admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.SlideOutLeft)
+                YoYo.with(Techniques.SlideOutUp)
                         .duration(1500)
                         .playOn(linear);
 

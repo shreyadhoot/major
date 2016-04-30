@@ -1,6 +1,8 @@
 package com.majorproject.indorinamkeens.SignUp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,9 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.majorproject.indorinamkeens.Dashboard.DashboardActivity;
 import com.majorproject.indorinamkeens.R;
 
+import io.codetail.animation.arcanimator.ArcAnimator;
+import io.codetail.animation.arcanimator.Side;
+
 public class CustomerSignUpActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -33,6 +38,17 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_sign_up);
+        final Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                coordinatorLayout.setVisibility(View.VISIBLE);
+                YoYo.with(Techniques.SlideInUp)
+                        .duration(2000)
+                        .playOn(coordinatorLayout);
+            }
+        }, 100);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,12 +66,16 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         inputMobile.addTextChangedListener(new MyTextWatcher(inputMobile));
 
 
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitForm();
+                SharedPreferences sharedPref = getSharedPreferences("NamkeensPreferenceData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("Name", inputName.getText().toString());
+                editor.putBoolean("IsRegistered", true);
+                editor.commit();
 
+        submitForm();
             }
         });
     }
@@ -100,7 +120,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     private boolean validateMobile() {
         String mobile = inputMobile.getText().toString().trim();
 
-        if (mobile.isEmpty() || !isValidMobile(mobile)||mobile.length()<10) {
+        if (mobile.isEmpty() || !isValidMobile(mobile)||mobile.length()!=10) {
             YoYo.with(Techniques.Tada)
                     .duration(1000)
                     .playOn(inputMobile);
@@ -160,10 +180,6 @@ public class CustomerSignUpActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.input_name:
                     validateName();
-                    break;
-
-                case R.id.input_mobile:
-                    validateMobile();
                     break;
 
                 case R.id.input_address:
